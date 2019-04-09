@@ -1,0 +1,66 @@
+<!DOCTYPE html> <!-- !DOCTYPE html是宣告這個網頁是基於HTML5所寫的 -->
+<html> <!-- html為網頁的起始標籤，其內包含了表頭head及內容body兩部分 -->
+<!---->
+<!-- head為網頁的表頭，通常將CSS、引用bootstrap、jquery等meta data，以及javascript函數放在表頭內 -->
+<!---->
+<head> 
+	<title>BMI計算服務操作介面</title>
+	<!-- 以下這5行是引用bootstrap及jquery CDN (Content Delivery Network)的標準動作 -->
+	 <meta charset="utf-8"> <!-- 指定內文的編碼，若要顯示中文，通常用utf-8這個unicode編碼 -->
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	 
+	<!-- 以下這個匿名函數是jquery的ready事件處理方法，當網頁Ready好的就會自動執行 -->
+	<!-- 因此，可以把要註冊的所有事件處理函數及需要先執行的命令放在這個函數內 -->
+	<script>
+		$(function(){
+		    // 幫id為btn1的按鈕標籤註冊了點擊事件的處理方法
+			// 在jquery及nodejs通常會使用匿名函數作為事件處理方法，比較簡潔
+			$('#btn1').click(function(){
+				$.ajax({
+				url:"/bmi",
+				method: "POST",
+				data: {height: $('#height').val(), weight: $('#weight').val()},
+				datatype: "json",
+				success: function(data){
+						$('#result').val(data.result);
+					}
+				});
+			});
+			
+			// 幫id為btn2的按鈕標籤註冊了點擊事件的處理方法
+			$('#btn2').click(function(){
+				 window.location.href = '/';
+			});
+		})		
+	</script>
+</head>
+<!---->
+<!-- body為網頁的內容，也就是呈現使用者介面UI的地方 -->
+<!---->
+<body class="bg-warning" style="font-family:標楷體">
+<div class="container">
+	<!-- BMI計算服務之GUI設計 -->
+	<Center>
+	<h3 class="bg-primary"><b>BMI計算服務操作介面(Ajax)</b></h3>
+	<div> 
+	    <h4>
+		<b class="text-primary">身高(公分)：</b> <input type="text" id="height"> <br/>
+		<b class="text-primary">體重(公斤)：</b> <input type="text" id="weight"> <br/>
+		<b class="text-primary">BMI值：</b>      <input type="text" id="result"><br/>
+		<button id="btn1" class="btn btn-success btn-md"><b>計算</b></button>
+	    </h4>
+	</div>
+	
+	<!-- 回首頁按鈕 -->
+	<center>
+	<div> 
+		<button id="btn2" class="btn btn-info btn-sm"><b>回首頁</b></button>
+	</div>
+	</center>
+	
+</div>
+</body>
+</html>
